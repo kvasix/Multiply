@@ -85,6 +85,7 @@
             id('selectadvanced').addEventListener("click", changetable_adv, false);
             id('selectkids').addEventListener("click", changetable_kids, false);
 
+            id('loginflybtn').addEventListener("click", clearloginstatus, false);
             id('pageflybtn').addEventListener("click", updatelevel, false);
             id('advflybtn').addEventListener("click", updatelevel, false);
             //localSettings.values.remove("highscores");
@@ -133,6 +134,7 @@
 
     function changeusrName(eventInfo) {
         localSettings.values["usrName"] = id('usrName').value;//eventInfo.srcElement.nodeValue;
+        id('login_success').style.visibility = "visible";
     }
 
     var previousSelected = -1;
@@ -144,17 +146,16 @@
     }
 
     function changetable_adv(eventInfo) {
-        if (previousSelected != id('selectadvanced').options.selectedIndex) {
+        if ((previousSelected - 13) != id('selectadvanced').options.selectedIndex) {
             WinJS.Navigation.navigate("/pages/advanced/advanced.html", id('selectadvanced').options.selectedIndex + 13);
-            previousSelected = id('selectadvanced').options.selectedIndex
+            previousSelected = id('selectadvanced').options.selectedIndex + 13; // Not a good hack. two lines above
         }
     }
-
-    var previousSelected_kids = -1;
+    
     function changetable_kids(eventInfo) {
-        if (previousSelected_kids != id('selectkids').options.selectedIndex) {
+        if ((previousSelected - 23) != id('selectkids').options.selectedIndex) {
             WinJS.Navigation.navigate("/pages/kids/kids.html", (id('selectkids').options.selectedIndex + 1) * 5);
-            previousSelected_kids = id('selectkids').options.selectedIndex;
+            previousSelected = id('selectkids').options.selectedIndex + 23; // Not a good hack. two lines above
         }
     }
 
@@ -170,5 +171,10 @@
         if (level <= 22) {
             id('L' + num).removeAttribute("disabled");
         }
+    }
+
+    function clearloginstatus(eventInfo) {
+        id('login_success').style.visibility = "hidden";
+        id('login_failed').style.visibility = "hidden";
     }
 })();

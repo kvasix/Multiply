@@ -1,0 +1,58 @@
+﻿.homepage section[role=main] {
+    margin-left: 120px;
+}
+
+@media screen and (-ms-view-state: snapped) {
+    .homepage section[role=main] {
+        margin-left: 20px;
+    }
+}
+
+@media screen and (-ms-view-state: portrait) {
+    .homepage section[role=main] {
+        margin-left: 100px;
+    }
+}
+
+.pagetitle {
+    height: 3%;
+    width: 9%;
+}
+.numContainer {    
+    width:7.5%;
+    height:15%;    
+    background-color:black;
+    border:solid white;
+    text-align:center;
+}
+
+ .freepawn {     
+    width:111px;
+    height:111px;    
+}
+
+.setpawn {     
+    width:75%;
+    height:99%;    
+}
+
+#numGrid {
+    position: absolute;
+    left: 3%;
+    width: 75%;
+    height: 60%;
+    top: 24%;
+    background-color: black;
+    overflow: scroll;
+}
+
+#pawnHeap {
+    position:absolute;
+    left:78%;
+    width:18%;
+    height:60%;
+    top:24%;
+    background-color:black;
+    overflow:scroll;
+    text-align:center;   
+}

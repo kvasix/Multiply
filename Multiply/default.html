@@ -71,7 +71,8 @@
                 type: 'flyout',
                 flyout: select('#volumeFlyout')}">
         </button>
-        <button data-win-control="WinJS.UI.AppBarCommand"
+        <button id="loginflybtn"
+            data-win-control="WinJS.UI.AppBarCommand"
             data-win-options="{
                 id: 'loginflyout', 
                 icon: 'contact', 
@@ -102,6 +103,9 @@
     <div id="loginFlyout"
         data-win-control="WinJS.UI.Flyout">
         <h3>Login</h3> Username: <input id="usrName" type="text" value="Anonymous" />
+        <br />
+        <span id="login_success" style="visibility:hidden">Login successful :)</span>
+        <span id="login_failed" style="visibility:hidden">Login failed :(</span>
     </div>
 </body>
 </html>
