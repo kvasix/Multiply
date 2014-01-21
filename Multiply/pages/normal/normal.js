@@ -1,10 +1,12 @@
 ﻿(function () {
     "use strict";
 
+    var TABLE_SIZE = 12, TABLE_START_NUM = 1, MISTAKE_THRESHOLD = 5;
+
     var timeCtrl = null, fixed_num = -1;
     var appData = Windows.Storage.ApplicationData.current;
     var localSettings = appData.localSettings;
-    var mistakeCount = 0, max_right = 11;
+    var mistakeCount = 0, max_right = TABLE_SIZE;
 
     WinJS.UI.Pages.define("/pages/normal/normal.html", {
         // This function is called whenever a user navigates to this page. It
@@ -12,10 +14,10 @@
         ready: function (element, options) {
             // TODO: Initialize the page here.
             mistakeCount = 0;
-            max_right = 11;
+            max_right = TABLE_SIZE;
             fixed_num = parseInt(options.toString());
 
-            for (var var_num = 0; var_num <= 10; var_num++) {
+            for (var var_num = TABLE_START_NUM; var_num <= TABLE_SIZE; var_num++) {
                 var row = document.createElement("tr");
 
                 var fixed = document.createElement("td");
@@ -42,7 +44,7 @@
                 id('readTable').appendChild(row);
             }
 
-            for (var var_num = 0; var_num <= 10; var_num++) {
+            for (var var_num = TABLE_START_NUM; var_num <= TABLE_SIZE; var_num++) {
                 var row = document.createElement("tr");
 
                 var fixed = document.createElement("td");
@@ -106,7 +108,7 @@
                         localSettings.values["highscores"] = localSettings.values["highscores"] + localSettings.values["usrName"] + "," + localSettings.values["level"] + "," + mistakeCount + "," + hours + ":" + mins + ":" + secs + ".";
                     else localSettings.values["highscores"] = localSettings.values["usrName"] + "," + localSettings.values["level"] + "," + mistakeCount + "," + hours + ":" + mins + ":" + secs + ".";
 
-                    if (mistakeCount > 5) {
+                    if (mistakeCount > MISTAKE_THRESHOLD) {
                         message += "Why don't you try it again?";
                     }
                     else {
@@ -142,10 +144,11 @@
     }
 
     function resetTable() {
-        for (var var_num = 0; var_num <= 10; var_num++) {
+        for (var var_num = TABLE_START_NUM; var_num <= TABLE_SIZE; var_num++) {
             id(var_num * fixed_num).value = "";
             id(var_num * fixed_num).setAttribute("style", "background-color:white");
         }
+        max_right = TABLE_SIZE;
         hours = 0, mins = 0, secs = 0;
     }
 
