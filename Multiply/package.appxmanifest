@@ -1,35 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="Multiply" Version="1.1.0.1" Publisher="CN=aakas_000" />
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+
+  <Identity
+    Name="73f9e084-7df8-4659-bc50-4a12dfad5085"
+    Version="1.0.0.0"
+    Publisher="CN=Kana" />
+
   <Properties>
     <DisplayName>Multiply</DisplayName>
-    <PublisherDisplayName>Gautam</PublisherDisplayName>
+    <PublisherDisplayName>Kana</PublisherDisplayName>
     <Logo>images\storelogo.png</Logo>
   </Properties>
+
   <Prerequisites>
-    <OSMinVersion>6.3.0</OSMinVersion>
-    <OSMaxVersionTested>6.3.0</OSMaxVersionTested>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
   </Prerequisites>
+
   <Resources>
     <Resource Language="x-generate" />
   </Resources>
+
   <Applications>
-    <Application Id="App" StartPage="default.html">
-      <m2:VisualElements DisplayName="Multiply" Description="Multiply" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="images\logo.png" Square30x30Logo="images\smalllogo.png">
-        <m2:DefaultTile>
-          <m2:ShowNameOnTiles>
-            <m2:ShowOn Tile="square150x150Logo" />
-          </m2:ShowNameOnTiles>
-        </m2:DefaultTile>
-        <m2:SplashScreen Image="images\splashscreen.png" />
-        <m2:InitialRotationPreference>
-          <m2:Rotation Preference="landscape" />
-          <m2:Rotation Preference="landscapeFlipped" />
-        </m2:InitialRotationPreference>
-      </m2:VisualElements>
+    <Application 
+      Id="App"
+      StartPage="default.html">
+
+      <VisualElements
+        DisplayName="Multiply"
+        Logo="images\logo.png"
+        SmallLogo="images\smalllogo.png"
+        Description="Multiply"
+        ForegroundText="light"
+        BackgroundColor="#464646">
+
+        <DefaultTile ShowName="allLogos" />
+        <SplashScreen Image="images\splashscreen.png" />
+
+      </VisualElements>
     </Application>
   </Applications>
+
   <Capabilities>
     <Capability Name="internetClient" />
   </Capabilities>
+
 </Package>
