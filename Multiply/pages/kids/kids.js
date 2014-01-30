@@ -2,7 +2,7 @@
     "use strict";
 
     var TABLE_SIZE = 12, TABLE_START_NUM = 1, MISTAKE_THRESHOLD = 5;
-
+    var audioTable;
     var timeCtrl = null, fixed_num = -1;
     var appData = Windows.Storage.ApplicationData.current;
     var localSettings = appData.localSettings;
@@ -15,7 +15,7 @@
             // TODO: Initialize the page here.
             mistakeCount = 0;
             max_right = TABLE_SIZE;
-            fixed_num = options.toString();
+            fixed_num = parseInt(options.toString());
 
             for (var var_num = TABLE_START_NUM; var_num <= TABLE_SIZE; var_num++) {
                 var row = document.createElement("tr");
@@ -35,9 +35,9 @@
                 var result = document.createElement("td");
                 result.innerText = var_num * fixed_num;
 
-                row.appendChild(fixed);
+                row.appendChild(numCol); 
                 row.appendChild(mult);
-                row.appendChild(numCol);
+                row.appendChild(fixed);
                 row.appendChild(equals);
                 row.appendChild(result);
 
@@ -62,13 +62,15 @@
                 var result = document.createElement("td");
                 var resBox = document.createElement("input");
                 resBox.id = var_num * fixed_num;
+                resBox.type = "number";
+                resBox.addEventListener("keydown", checkandmovefocus, false);
                 resBox.addEventListener("focusout", checkResult, false);
                 resBox.size = 3;
                 result.appendChild(resBox);
 
-                row.appendChild(fixed);
+                row.appendChild(numCol); 
                 row.appendChild(mult);
-                row.appendChild(numCol);
+                row.appendChild(fixed);
                 row.appendChild(equals);
                 row.appendChild(result);
 
@@ -80,22 +82,81 @@
 
             timeCtrl = setInterval(timer, 500);
 
+            if (fixed_num < 10) {
+                audioTable = new Array();
+                audioTable[0] = new Audio("/sounds/0" + fixed_num + ".wma");
+                console.log("/sounds/0" + fixed_num + ".wma");
+                audioTable[0].load();
+
+                audioTable[1] = new Audio("/sounds/1" + fixed_num + ".wma");
+                audioTable[1].load();
+
+                audioTable[2] = new Audio("/sounds/2" + fixed_num + ".wma");
+                audioTable[2].load();
+
+                var select = document.createElement("select");
+                select.id = "selecttableaudio";
+
+                for (var i = 1; i <= 3; i++) {
+                    var option = document.createElement("option");
+                    option.innerHTML = "Speed " + i;
+                    select.appendChild(option);
+                }
+                select.addEventListener("click", changeSpeed, false);
+                id("audioselectSpan").appendChild(select);
+                id("audioselectSpan").style.visibility = "visible";
+            }
         },
 
         unload: function () {
             // TODO: Respond to navigations away from this page.
             clearInterval(timeCtrl);
             hours = 0, mins = 0, secs = 0;
+            for (var i = 0; i < 3; i++)
+                if (!audioTable[i].paused)
+                    audioTable[i].pause();
         }
     });
+    
+    var previousSelected = -1;
+    function changeSpeed(eventInfo) {
+        var index = id('selecttableaudio').options.selectedIndex;
+        if (previousSelected != index &&
+            audioTable[index].paused) {
+            readTable(index);
+            previousSelected = index;
+        }
+    }
+
+    function readTable(speed) {
+        for (var i = 0; i < 3; i++) {
+            if (!audioTable[i].paused && i != speed)
+                audioTable[i].pause();
+        }
+        if (audioTable[speed].paused) {
+            audioTable[speed].load();
+            audioTable[speed].play();
+        }
+    }
 
     var mistakeCount = 0, max_right = TABLE_SIZE;
-
+    function checkandmovefocus(eventInfo) {
+        if (eventInfo.keyCode == 13) {
+            var isRight = checkResult(eventInfo);
+            console.log(isRight);
+            if (isRight) {
+                var nextBoxID = parseInt(eventInfo.currentTarget.id) + fixed_num;
+                console.log(nextBoxID);
+                id(nextBoxID).focus();
+            }
+        }
+    }
     function checkResult(eventInfo) {
-        if (this.value) {
-            if (this.id == this.value) {
+        var thisBox = eventInfo.currentTarget;
+        if (thisBox.value) {
+            if (thisBox.id == thisBox.value) {
                 id("mistakeCount").innerHTML = mistakeCount;
-                document.getElementById(this.id).setAttribute("style", "background-color:white");
+                document.getElementById(thisBox.id).setAttribute("style", "background-color:white");
                 if (!(--max_right)) {
                     clearInterval(timeCtrl);
                     //applaudAudio.volume = localSettings.values["volume"];
@@ -111,12 +172,14 @@
                     var msgBox = new Windows.UI.Popups.MessageDialog(message);
                     msgBox.showAsync();                    
                 }
+                return true;
             }
             else {
                 mistakeCount++;
                 id("mistakeCount").innerHTML = mistakeCount + ": Check that Again!";
-                document.getElementById(this.id).setAttribute("style", "background-color:red");
-            }
+                document.getElementById(thisBox.id).setAttribute("style", "background-color:red");
+                return false;
+            }            
         }
     }
 
@@ -148,5 +211,4 @@
         id('showTest').style.visibility = "hidden";
         id('testTable').style.visibility = "visible";
     }
-
 })();

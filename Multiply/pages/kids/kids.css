@@ -22,13 +22,19 @@
     top: 24%;
     left: 15%;
     text-align:right;
+    font-family:'Lucida Console';
+    font-weight:300;
+    font-size:medium;
 }
 
 #testTable {
     position:absolute;
     top: 24%;
     left: 54%;
-    text-align:right;
+    text-align:right;    
+    font-family:'Lucida Console';
+    font-size:medium;
+    font-weight:300;
     visibility:hidden;
 }
 

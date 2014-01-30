@@ -9,7 +9,7 @@
         // populates the page elements with the app's data.
         ready: function (element, options) {
             // TODO: Initialize the page here.
-            localSettings.values["level"] = 14;
+            localSettings.values["level"] = 20;
             document.getElementById("level").innerHTML = localSettings.values["level"];
         }
     });

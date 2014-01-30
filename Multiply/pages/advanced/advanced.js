@@ -35,9 +35,9 @@
                 var result = document.createElement("td");
                 result.innerText = var_num * fixed_num;
 
-                row.appendChild(fixed);
-                row.appendChild(mult);
                 row.appendChild(numCol);
+                row.appendChild(mult);
+                row.appendChild(fixed);
                 row.appendChild(equals);
                 row.appendChild(result);
 
@@ -62,13 +62,15 @@
                 var result = document.createElement("td");
                 var resBox = document.createElement("input");
                 resBox.id = var_num * fixed_num;
+                resBox.type = "number";
+                resBox.addEventListener("keydown", checkandmovefocus, false);
                 resBox.addEventListener("focusout", checkResult, false);
                 resBox.size = 3;
                 result.appendChild(resBox);
 
-                row.appendChild(fixed);
-                row.appendChild(mult);
                 row.appendChild(numCol);
+                row.appendChild(mult);
+                row.appendChild(fixed);
                 row.appendChild(equals);
                 row.appendChild(result);
 
@@ -91,12 +93,24 @@
     });
 
     var mistakeCount = 0, max_right = TABLE_SIZE;
-
+    function checkandmovefocus(eventInfo) {        
+        if (eventInfo.keyCode == 13) {
+            var isRight = checkResult(eventInfo);
+            console.log(isRight);
+            if (isRight) {
+                var nextBoxID = parseInt(eventInfo.currentTarget.id) + fixed_num;
+                console.log(nextBoxID);
+                id(nextBoxID).focus();
+            }
+        }
+    }
     function checkResult(eventInfo) {
-        if (this.value) {
-            if (this.id == this.value) {
+        var thisBox = eventInfo.currentTarget;
+        if (thisBox.value) {
+            if (thisBox.id == thisBox.value) {
                 id("mistakeCount").innerHTML = mistakeCount;
-                document.getElementById(this.id).setAttribute("style", "background-color:white");
+                document.getElementById(thisBox.id).setAttribute("style", "background-color:white");
+
                 if (!(--max_right)) {
                     clearInterval(timeCtrl);
                     //applaudAudio.volume = localSettings.values["volume"];
@@ -117,15 +131,16 @@
                         upgradeLevel();
                     }
                     var msgBox = new Windows.UI.Popups.MessageDialog(message);
-                    msgBox.showAsync();
-
-                    
+                    msgBox.showAsync();                 
                 }
+
+                return true;
             }
             else {
                 mistakeCount++;
                 id("mistakeCount").innerHTML = mistakeCount + ": Check that Again!";
-                document.getElementById(this.id).setAttribute("style", "background-color:red");
+                document.getElementById(thisBox.id).setAttribute("style", "background-color:red");
+                return false;
             }
         }
     }

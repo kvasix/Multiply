@@ -83,6 +83,33 @@
     <Content Include="pages\surprise\surprise.css" />
     <Content Include="pages\surprise\surprise.html" />
     <Content Include="pages\surprise\surprise.js" />
+    <Content Include="sounds\01.wma" />
+    <Content Include="sounds\02.wma" />
+    <Content Include="sounds\03.wma" />
+    <Content Include="sounds\04.wma" />
+    <Content Include="sounds\05.wma" />
+    <Content Include="sounds\06.wma" />
+    <Content Include="sounds\07.wma" />
+    <Content Include="sounds\08.wma" />
+    <Content Include="sounds\09.wma" />
+    <Content Include="sounds\11.wma" />
+    <Content Include="sounds\12.wma" />
+    <Content Include="sounds\13.wma" />
+    <Content Include="sounds\14.wma" />
+    <Content Include="sounds\15.wma" />
+    <Content Include="sounds\16.wma" />
+    <Content Include="sounds\17.wma" />
+    <Content Include="sounds\18.wma" />
+    <Content Include="sounds\19.wma" />
+    <Content Include="sounds\21.wma" />
+    <Content Include="sounds\22.wma" />
+    <Content Include="sounds\23.wma" />
+    <Content Include="sounds\24.wma" />
+    <Content Include="sounds\25.wma" />
+    <Content Include="sounds\26.wma" />
+    <Content Include="sounds\27.wma" />
+    <Content Include="sounds\28.wma" />
+    <Content Include="sounds\29.wma" />
     <None Include="Multiply_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
