@@ -17,7 +17,7 @@
             max_right = TABLE_SIZE;
             fixed_num = parseInt(options.toString());
 
-            for (var var_num = TABLE_START_NUM; var_num <= TABLE_SIZE; var_num++) {
+            for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
                 var row = document.createElement("tr");
 
                 var fixed = document.createElement("td");
@@ -44,7 +44,7 @@
                 id('readTable').appendChild(row);
             }
 
-            for (var var_num = TABLE_START_NUM; var_num <= TABLE_SIZE; var_num++) {
+            for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
                 var row = document.createElement("tr");
 
                 var fixed = document.createElement("td");
@@ -147,28 +147,42 @@
             if (isRight) {
                 var nextBoxID = parseInt(eventInfo.currentTarget.id) + fixed_num;
                 console.log(nextBoxID);
-                id(nextBoxID).focus();
+                if (id(nextBoxID))
+                    id(nextBoxID).focus();
             }
         }
     }
+
+    var isset = [false, false, false, false, false, false, false, false, false, false, false, false];
     function checkResult(eventInfo) {
         var thisBox = eventInfo.currentTarget;
         if (thisBox.value) {
             if (thisBox.id == thisBox.value) {
                 id("mistakeCount").innerHTML = mistakeCount;
                 document.getElementById(thisBox.id).setAttribute("style", "background-color:white");
-                if (!(--max_right)) {
+
+                if (!isset[parseInt(thisBox.id) / fixed_num - TABLE_START_NUM]) {
+                    --max_right;
+                    isset[parseInt(thisBox.id) / fixed_num - TABLE_START_NUM] = true;
+                }
+
+                if (!max_right) {
                     clearInterval(timeCtrl);
                     //applaudAudio.volume = localSettings.values["volume"];
                     //applaudAudio.play();
+                    
+                    if (localSettings.values["highscores"]) {
+                        localSettings.values["highscores"] += ',{ "user": "' + localSettings.values["usrName"] + '", "levelType": "Kids", "level": ' + localSettings.values["level"];
+                        localSettings.values["highscores"] += ', "mistakes": ' + mistakeCount + ', "hours": ' + hours + ', "mins": ' + mins + ', "secs": ' + secs + ' }';
+                    }
+                    else {
+                        localSettings.values["highscores"] = '{ "user":"' + localSettings.values["usrName"] + '", "levelType": "Kids", "level": ' + localSettings.values["level"];
+                        localSettings.values["highscores"] += ', "mistakes": ' + mistakeCount + ', "hours": ' + hours + ', "mins": ' + mins + ', "secs": ' + secs + ' }';
+                    }
+
                     var message = "Good Job, " + localSettings.values["usrName"] + "!!! You've completed this level in " +
                         (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs +
                          " with " + mistakeCount + " mistakes. ";
-
-                    if (localSettings.values["highscores"])
-                        localSettings.values["highscores"] = localSettings.values["highscores"] + localSettings.values["usrName"] + "," + "Scrambled" + "," + mistakeCount + "," + hours + ":" + mins + ":" + secs + ".";
-                    else localSettings.values["highscores"] = localSettings.values["usrName"] + "," + "kids" + "," + mistakeCount + "," + hours + ":" + mins + ":" + secs + "." + "Why don't you try it again?";
-                    
                     var msgBox = new Windows.UI.Popups.MessageDialog(message);
                     msgBox.showAsync();                    
                 }
@@ -198,7 +212,7 @@
     }
 
     function resetTable() {
-        for (var var_num = TABLE_START_NUM; var_num <= TABLE_SIZE; var_num++) {
+        for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
             id(var_num * fixed_num).value = "";
             id(var_num * fixed_num).setAttribute("style", "background-color:white");
         }
@@ -209,6 +223,7 @@
     function showTable() {
         id('readTable').style.visibility = "hidden";
         id('showTest').style.visibility = "hidden";
+        id('audioselectSpan').style.visibility = "hidden";
         id('testTable').style.visibility = "visible";
     }
 })();

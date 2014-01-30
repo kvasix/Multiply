@@ -11,6 +11,7 @@
             // TODO: Initialize the page here.
             localSettings.values["level"] = 20;
             document.getElementById("level").innerHTML = localSettings.values["level"];
+            //Windows.Storage.ApplicationData.current.clearAsync();
         }
     });
 })();

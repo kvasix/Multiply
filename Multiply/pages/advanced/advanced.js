@@ -6,7 +6,7 @@
     var timeCtrl = null, fixed_num = -1;
     var appData = Windows.Storage.ApplicationData.current;
     var localSettings = appData.localSettings;
-    var mistakeCount = 0, max_right = TABLE_SIZE;
+    var mistakeCount = 0, max_right;
 
     WinJS.UI.Pages.define("/pages/advanced/advanced.html", {
         // This function is called whenever a user navigates to this page. It
@@ -17,7 +17,7 @@
             max_right = TABLE_SIZE;
             fixed_num = parseInt(options.toString());
 
-            for (var var_num = TABLE_START_NUM; var_num <= TABLE_SIZE; var_num++) {
+            for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
                 var row = document.createElement("tr");
 
                 var fixed = document.createElement("td");
@@ -44,7 +44,7 @@
                 id('readTable').appendChild(row);
             }
 
-            for (var var_num = TABLE_START_NUM; var_num <= TABLE_SIZE; var_num++) {
+            for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
                 var row = document.createElement("tr");
 
                 var fixed = document.createElement("td");
@@ -81,14 +81,12 @@
             id('showTest').addEventListener("click", showTable, false);
 
             timeCtrl = setInterval(timer, 500);
-
         },
 
         unload: function () {
             // TODO: Respond to navigations away from this page.
             clearInterval(timeCtrl);
             hours = 0, mins = 0, secs = 0;
-            max_right = TABLE_SIZE;
         }
     });
 
@@ -100,10 +98,13 @@
             if (isRight) {
                 var nextBoxID = parseInt(eventInfo.currentTarget.id) + fixed_num;
                 console.log(nextBoxID);
-                id(nextBoxID).focus();
+                if (id(nextBoxID))
+                    id(nextBoxID).focus();
             }
         }
     }
+
+    var isset = [false, false, false, false, false, false, false, false, false, false, false, false];
     function checkResult(eventInfo) {
         var thisBox = eventInfo.currentTarget;
         if (thisBox.value) {
@@ -111,18 +112,28 @@
                 id("mistakeCount").innerHTML = mistakeCount;
                 document.getElementById(thisBox.id).setAttribute("style", "background-color:white");
 
-                if (!(--max_right)) {
+                if (!isset[parseInt(thisBox.id) / fixed_num - TABLE_START_NUM]) {
+                    --max_right;
+                    isset[parseInt(thisBox.id) / fixed_num - TABLE_START_NUM] = true;
+                }
+
+                if (!max_right) {
                     clearInterval(timeCtrl);
                     //applaudAudio.volume = localSettings.values["volume"];
                     //applaudAudio.play();
+
+                    if (localSettings.values["highscores"]) {
+                        localSettings.values["highscores"] += ',{ "user": "' + localSettings.values["usrName"] + '", "levelType": "Advanced", "level": ' + localSettings.values["level"];
+                        localSettings.values["highscores"] += ', "mistakes": ' + mistakeCount + ', "hours": ' + hours + ', "mins": ' + mins + ', "secs": ' + secs + ' }';
+                    }
+                    else {
+                        localSettings.values["highscores"] = '{ "user":"' + localSettings.values["usrName"] + '", "levelType": "Advanced", "level": ' + localSettings.values["level"];
+                        localSettings.values["highscores"] += ', "mistakes": ' + mistakeCount + ', "hours": ' + hours + ', "mins": ' + mins + ', "secs": ' + secs + ' }';
+                    }                    
+
                     var message = "Good Job, " + localSettings.values["usrName"] + "!!! You've completed this level in " +
                         (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs +
                          " with " + mistakeCount + " mistakes. ";
-
-                    if (localSettings.values["highscores"])
-                        localSettings.values["highscores"] = localSettings.values["highscores"] + localSettings.values["usrName"] + "," + localSettings.values["level"] + "," + mistakeCount + "," + hours + ":" + mins + ":" + secs + ".";
-                    else localSettings.values["highscores"] = localSettings.values["usrName"] + "," + localSettings.values["level"] + "," + mistakeCount + "," + hours + ":" + mins + ":" + secs + ".";
-                    
                     if (mistakeCount > MISTAKE_THRESHOLD) {
                         message += "Why don't you try it again?";
                     }
@@ -160,7 +171,7 @@
     }
 
     function resetTable() {
-        for (var var_num = TABLE_START_NUM; var_num <= TABLE_SIZE; var_num++) {
+        for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
             id(var_num * fixed_num).value = "";
             id(var_num * fixed_num).setAttribute("style", "background-color:white");
         }

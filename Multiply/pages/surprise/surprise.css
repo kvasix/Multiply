@@ -16,3 +16,24 @@
         margin-right: 100px;
     }
 }
+
+#readTable {
+    position:absolute;
+    top: 24%;
+    left: 15%;
+    text-align:right;
+}
+
+#testTable {
+    position:absolute;
+    top: 24%;
+    left: 54%;
+    text-align:right;
+    visibility:hidden;
+}
+
+td {
+    position:relative;
+    width: 3em;
+    height: 3em;
+}
