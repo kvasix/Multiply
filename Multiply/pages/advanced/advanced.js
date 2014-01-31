@@ -7,6 +7,7 @@
     var appData = Windows.Storage.ApplicationData.current;
     var localSettings = appData.localSettings;
     var mistakeCount = 0, max_right;
+    var isset, gameover;
 
     WinJS.UI.Pages.define("/pages/advanced/advanced.html", {
         // This function is called whenever a user navigates to this page. It
@@ -44,6 +45,7 @@
                 id('readTable').appendChild(row);
             }
 
+            isset = new Array();
             for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
                 var row = document.createElement("tr");
 
@@ -66,6 +68,7 @@
                 resBox.addEventListener("keydown", checkandmovefocus, false);
                 resBox.addEventListener("focusout", checkResult, false);
                 resBox.size = 3;
+                isset[var_num - TABLE_START_NUM] = false;
                 result.appendChild(resBox);
 
                 row.appendChild(numCol);
@@ -81,12 +84,15 @@
             id('showTest').addEventListener("click", showTable, false);
 
             timeCtrl = setInterval(timer, 500);
+            gameover = false;
         },
 
         unload: function () {
             // TODO: Respond to navigations away from this page.
             clearInterval(timeCtrl);
             hours = 0, mins = 0, secs = 0;
+
+            //max_right = TABLE_SIZE;
         }
     });
 
@@ -104,10 +110,9 @@
         }
     }
 
-    var isset = [false, false, false, false, false, false, false, false, false, false, false, false];
     function checkResult(eventInfo) {
         var thisBox = eventInfo.currentTarget;
-        if (thisBox.value) {
+        if (thisBox.value && !gameover) {
             if (thisBox.id == thisBox.value) {
                 id("mistakeCount").innerHTML = mistakeCount;
                 document.getElementById(thisBox.id).setAttribute("style", "background-color:white");
@@ -142,7 +147,8 @@
                         upgradeLevel();
                     }
                     var msgBox = new Windows.UI.Popups.MessageDialog(message);
-                    msgBox.showAsync();                 
+                    msgBox.showAsync();
+                    gameover = true;
                 }
 
                 return true;
@@ -174,9 +180,11 @@
         for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
             id(var_num * fixed_num).value = "";
             id(var_num * fixed_num).setAttribute("style", "background-color:white");
+            isset[var_num - TABLE_START_NUM] = false;
         }
         max_right = TABLE_SIZE;
         hours = 0, mins = 0, secs = 0;
+        gameover = false;
     }
 
     function showTable() {

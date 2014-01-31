@@ -8,6 +8,7 @@
     var localSettings = appData.localSettings;
     var mistakeCount = 0, max_right;
     var fixed_nums;
+    var isset, gameover;
 
     WinJS.UI.Pages.define("/pages/surprise/surprise.html", {
         // This function is called whenever a user navigates to this page. It
@@ -48,6 +49,7 @@
                 id('readTable').appendChild(row);
             }
 
+            isset = new Array();
             for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
                 var row = document.createElement("tr");
 
@@ -71,6 +73,7 @@
                 resBox.addEventListener("focusout", checkResult, false);
                 resBox.size = 3;
                 resBox.setAttribute("boxid", var_num);
+                isset[var_num - TABLE_START_NUM] = false;
                 result.appendChild(resBox);
 
                 row.appendChild(numCol);
@@ -86,12 +89,15 @@
             id('showTest').addEventListener("click", showTable, false);
 
             timeCtrl = setInterval(timer, 500);
+            gameover = false;
         },
 
         unload: function () {
             // TODO: Respond to navigations away from this page.
             clearInterval(timeCtrl);
             hours = 0, mins = 0, secs = 0;
+
+            //max_right = TABLE_SIZE;
         }
     });
 
@@ -109,10 +115,9 @@
         }
     }
 
-    var isset = [false, false, false, false, false, false, false, false, false, false, false, false];
     function checkResult(eventInfo) {
         var thisBox = eventInfo.currentTarget;
-        if (thisBox.value) {
+        if (thisBox.value && !gameover) {
             if (thisBox.id == thisBox.value) {
                 id("mistakeCount").innerHTML = mistakeCount;
                 document.getElementById(thisBox.id).setAttribute("style", "background-color:white");
@@ -152,6 +157,7 @@
                          " with " + mistakeCount + " mistakes. Why don't you try it again?";
                     var msgBox = new Windows.UI.Popups.MessageDialog(message);
                     msgBox.showAsync();
+                    gameover = true;
                 }
                 return true;
             }
@@ -184,9 +190,11 @@
 
             id(var_num * fixed_nums[var_num - TABLE_START_NUM]).value = "";
             id(var_num * fixed_nums[var_num - TABLE_START_NUM]).setAttribute("style", "background-color:white");
+            isset[var_num - TABLE_START_NUM] = false;
         }
         max_right = TABLE_SIZE;
         hours = 0, mins = 0, secs = 0;
+        gameover = false;
     }
 
     function showTable() {

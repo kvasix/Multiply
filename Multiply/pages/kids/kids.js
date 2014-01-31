@@ -7,6 +7,7 @@
     var appData = Windows.Storage.ApplicationData.current;
     var localSettings = appData.localSettings;
     var mistakeCount = 0, max_right = 11;
+    var isset, gameover;
 
     WinJS.UI.Pages.define("/pages/kids/kids.html", {
         // This function is called whenever a user navigates to this page. It
@@ -44,6 +45,7 @@
                 id('readTable').appendChild(row);
             }
 
+            isset = new Array();
             for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
                 var row = document.createElement("tr");
 
@@ -66,6 +68,7 @@
                 resBox.addEventListener("keydown", checkandmovefocus, false);
                 resBox.addEventListener("focusout", checkResult, false);
                 resBox.size = 3;
+                isset[var_num - TABLE_START_NUM] = false;
                 result.appendChild(resBox);
 
                 row.appendChild(numCol); 
@@ -85,7 +88,6 @@
             if (fixed_num < 10) {
                 audioTable = new Array();
                 audioTable[0] = new Audio("/sounds/0" + fixed_num + ".wma");
-                console.log("/sounds/0" + fixed_num + ".wma");
                 audioTable[0].load();
 
                 audioTable[1] = new Audio("/sounds/1" + fixed_num + ".wma");
@@ -106,6 +108,8 @@
                 id("audioselectSpan").appendChild(select);
                 id("audioselectSpan").style.visibility = "visible";
             }
+
+            gameover = false;
         },
 
         unload: function () {
@@ -115,6 +119,8 @@
             for (var i = 0; i < 3; i++)
                 if (!audioTable[i].paused)
                     audioTable[i].pause();
+
+            max_right = TABLE_SIZE;
         }
     });
     
@@ -153,10 +159,9 @@
         }
     }
 
-    var isset = [false, false, false, false, false, false, false, false, false, false, false, false];
     function checkResult(eventInfo) {
         var thisBox = eventInfo.currentTarget;
-        if (thisBox.value) {
+        if (thisBox.value && !gameover) {
             if (thisBox.id == thisBox.value) {
                 id("mistakeCount").innerHTML = mistakeCount;
                 document.getElementById(thisBox.id).setAttribute("style", "background-color:white");
@@ -184,7 +189,8 @@
                         (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs +
                          " with " + mistakeCount + " mistakes. ";
                     var msgBox = new Windows.UI.Popups.MessageDialog(message);
-                    msgBox.showAsync();                    
+                    msgBox.showAsync();
+                    gameover = true;
                 }
                 return true;
             }
@@ -215,9 +221,11 @@
         for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
             id(var_num * fixed_num).value = "";
             id(var_num * fixed_num).setAttribute("style", "background-color:white");
+            isset[var_num - TABLE_START_NUM] = false;
         }
         max_right = TABLE_SIZE;
         hours = 0, mins = 0, secs = 0;
+        gameover = false;
     }
 
     function showTable() {
