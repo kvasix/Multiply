@@ -199,6 +199,7 @@
                     var msgBox = new Windows.UI.Popups.MessageDialog(message);
                     msgBox.showAsync();
                     gameover = true;
+                    id('reset').setAttribute("disabled", true);
                 }
                 return true;
             }
@@ -224,12 +225,18 @@
         (mins == 60) ? (++hours, mins = 0) : true;
         id('timeCounter').innerHTML = (hours < 10 ? "0" : "") + hours + separator + (mins < 10 ? "0" : "") + mins + separator + (secs < 10 ? "0" : "") + secs;
     }
-
+     
     function resetTable() {
         for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
             id(var_num * fixed_num).value = "";
             id(var_num * fixed_num).setAttribute("style", "background-color:white");
             isset[var_num - TABLE_START_NUM] = false;
+
+            id(var_num * fixed_num).removeEventListener("keydown", checkandmovefocus, false);
+            id(var_num * fixed_num).removeEventListener("focusout", checkResult, false);
+
+            //id(var_num * fixed_num).addEventListener("keydown", checkandmovefocus, false);
+            //id(var_num * fixed_num).addEventListener("focusout", checkResult, false);
         }
         max_right = TABLE_SIZE;
         hours = 0, mins = 0, secs = 0;
@@ -241,6 +248,7 @@
         id('showTest').style.visibility = "hidden";
         id('audioselectSpan').style.visibility = "hidden";
         id('testTable').style.visibility = "visible";
+        id('mistakesBox').style.visibility = "visible";
     }
 
     function upgradeLevel() {

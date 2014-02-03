@@ -158,6 +158,7 @@
                     var msgBox = new Windows.UI.Popups.MessageDialog(message);
                     msgBox.showAsync();
                     gameover = true;
+                    id('reset').setAttribute("disabled", true);
                 }
                 return true;
             }

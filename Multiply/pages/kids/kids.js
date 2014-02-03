@@ -191,6 +191,7 @@
                     var msgBox = new Windows.UI.Popups.MessageDialog(message);
                     msgBox.showAsync();
                     gameover = true;
+                    id('reset').setAttribute("disabled", true);
                 }
                 return true;
             }
@@ -233,5 +234,6 @@
         id('showTest').style.visibility = "hidden";
         id('audioselectSpan').style.visibility = "hidden";
         id('testTable').style.visibility = "visible";
+        id('mistakesBox').style.visibility = "visible";
     }
 })();
