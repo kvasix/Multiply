@@ -235,5 +235,9 @@
         id('audioselectSpan').style.visibility = "hidden";
         id('testTable').style.visibility = "visible";
         id('mistakesBox').style.visibility = "visible";
+
+        for (var i = 0; i < 3; i++)
+            if (!audioTable[i].paused)
+                audioTable[i].pause();
     }
 })();
