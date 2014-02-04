@@ -116,21 +116,20 @@
             // TODO: Respond to navigations away from this page.
             clearInterval(timeCtrl);
             hours = 0, mins = 0, secs = 0;
-            for (var i = 0; i < 3; i++)
-                if (!audioTable[i].paused)
-                    audioTable[i].pause();
+            if (audioTable) {
+                for (var i = 0; i < 3; i++)
+                    if (!audioTable[i].paused)
+                        audioTable[i].pause();
+            }
 
             max_right = TABLE_SIZE;
         }
     });
     
-    var previousSelected = -1;
     function changeSpeed(eventInfo) {
         var index = id('selecttableaudio').options.selectedIndex;
-        if (previousSelected != index &&
-            audioTable[index].paused) {
+        if (audioTable[index].paused) {
             readTable(index);
-            previousSelected = index;
         }
     }
 

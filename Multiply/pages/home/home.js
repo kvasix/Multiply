@@ -9,8 +9,10 @@
         // populates the page elements with the app's data.
         ready: function (element, options) {
             // TODO: Initialize the page here.
-            //localSettings.values["level"] = 20;
+            localSettings.values["level"] = 15;
             //Windows.Storage.ApplicationData.current.clearAsync();
+
+            document.getElementById("greetings").innerHTML = "Hi " + localSettings.values["usrName"] + "! Welcome to Multiply.";
             document.getElementById("level").innerHTML = localSettings.values["level"];
         }
     });

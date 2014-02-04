@@ -124,13 +124,10 @@
         }
     });
 
-    var previousSelected = -1;
     function changeSpeed(eventInfo) {
         var index = id('selecttableaudio').options.selectedIndex;
-        if (previousSelected != index &&
-            audioTable[index].paused) {
+        if (audioTable[index].paused) {
             readTable(index);
-            previousSelected = index;
         }
     }
 
