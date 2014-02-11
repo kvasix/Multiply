@@ -89,6 +89,8 @@
             id('pageflybtn').addEventListener("click", updatelevel, false);
             id('advflybtn').addEventListener("click", updatelevel, false);
             //localSettings.values.remove("highscores");
+
+            document.getElementById('appbar').winControl.show();
         }
     });
 
@@ -111,21 +113,25 @@
     function homeBoard(eventInfo) {
         eventInfo.preventDefault();
         WinJS.Navigation.navigate("/pages/home/home.html");
+        document.getElementById('appbar').winControl.hide();
     }   
 
     function surpriseme(eventInfo) {
         eventInfo.preventDefault();
         WinJS.Navigation.navigate("/pages/surprise/surprise.html");
+        document.getElementById('appbar').winControl.hide();
     }
 
     function renderGraph(eventInfo) {
         eventInfo.preventDefault();
         WinJS.Navigation.navigate("/pages/graph/graph.html");
+        document.getElementById('appbar').winControl.hide();
     }
 
     function showScores(eventInfo) {
         eventInfo.preventDefault();
         WinJS.Navigation.navigate("/pages/highscores/highscore.html");
+        document.getElementById('appbar').winControl.hide();
     }
 
     function changeVolume(eventInfo) {
@@ -137,26 +143,19 @@
         id('login_success').style.visibility = "visible";
     }
 
-    var previousSelected = -1;
     function changetable(eventInfo) {
-        if (previousSelected != id('selectpage').options.selectedIndex) {
-            WinJS.Navigation.navigate("/pages/normal/normal.html", id('selectpage').options.selectedIndex + 1);
-            previousSelected = id('selectpage').options.selectedIndex
-        }
+        WinJS.Navigation.navigate("/pages/normal/normal.html", id('selectpage').options.selectedIndex + 1);
+        document.getElementById('appbar').winControl.hide();
     }
 
     function changetable_adv(eventInfo) {
-        if ((previousSelected - 13) != id('selectadvanced').options.selectedIndex) {
-            WinJS.Navigation.navigate("/pages/advanced/advanced.html", id('selectadvanced').options.selectedIndex + 13);
-            previousSelected = id('selectadvanced').options.selectedIndex + 13; // Not a good hack. two lines above
-        }
+        WinJS.Navigation.navigate("/pages/advanced/advanced.html", id('selectadvanced').options.selectedIndex + 13);
+        document.getElementById('appbar').winControl.hide();
     }
     
     function changetable_kids(eventInfo) {
-        if ((previousSelected - 23) != id('selectkids').options.selectedIndex) {
-            WinJS.Navigation.navigate("/pages/kids/kids.html", (id('selectkids').options.selectedIndex + 1) * 5);
-            previousSelected = id('selectkids').options.selectedIndex + 23; // Not a good hack. two lines above
-        }
+        WinJS.Navigation.navigate("/pages/kids/kids.html", (id('selectkids').options.selectedIndex + 1) * 5);
+        document.getElementById('appbar').winControl.hide();
     }
 
     function updatelevel(eventInfo) {
