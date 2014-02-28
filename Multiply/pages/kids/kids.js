@@ -174,7 +174,7 @@
                     clearInterval(timeCtrl);
                     //applaudAudio.volume = localSettings.values["volume"];
                     //applaudAudio.play();
-                    
+                    /*
                     if (localSettings.values["highscores"]) {
                         localSettings.values["highscores"] += ',{ "user": "' + localSettings.values["usrName"] + '", "levelType": "Kids", "level": ' + localSettings.values["level"];
                         localSettings.values["highscores"] += ', "mistakes": ' + mistakeCount + ', "hours": ' + hours + ', "mins": ' + mins + ', "secs": ' + secs + ' }';
@@ -183,7 +183,7 @@
                         localSettings.values["highscores"] = '{ "user":"' + localSettings.values["usrName"] + '", "levelType": "Kids", "level": ' + localSettings.values["level"];
                         localSettings.values["highscores"] += ', "mistakes": ' + mistakeCount + ', "hours": ' + hours + ', "mins": ' + mins + ', "secs": ' + secs + ' }';
                     }
-
+                    */
                     var message = "Good Job, " + localSettings.values["usrName"] + "!!! You've completed this level in " +
                         (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs +
                          " with " + mistakeCount + " mistakes. ";

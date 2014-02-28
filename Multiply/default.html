@@ -37,7 +37,7 @@
                 icon: 'twopage', 
                 label: 'Select Multiplication Tables', 
                 type: 'flyout',
-                flyout: select('#pageFlyout')}">
+                flyout: select('#pageFlyout')}" disabled>
         </button>
         <button id="advflybtn"
             data-win-control="WinJS.UI.AppBarCommand"
@@ -46,22 +46,22 @@
                 icon: 'twopage', 
                 label: 'Select Advanced Tables', 
                 type: 'flyout',
-                flyout: select('#advancedFlyout')}">
+                flyout: select('#advancedFlyout')}" disabled>
         </button>
         <button id="surprise" 
             data-win-control="WinJS.UI.AppBarCommand" 
             data-win-options="{id:'surprise', label:'Surprise Me!', icon:WinJS.UI.AppBarIcon.switch, tooltip:'Random table popups'}" 
-            type="button">
+            type="button" disabled>
         </button>           
         <button id="graph" 
             data-win-control="WinJS.UI.AppBarCommand" 
             data-win-options="{id:'graph', label:'Graph', icon:'threebars', tooltip:'Draw Graph'}" 
-            type="button">
+            type="button" disabled>
         </button> 
         <button id="highscores" 
             data-win-control="WinJS.UI.AppBarCommand" 
             data-win-options="{id:'highscores', label:'High Scores', icon:'bullets', tooltip:'HighScore List'}" 
-            type="button">
+            type="button" disabled>
         </button>
         <button data-win-control="WinJS.UI.AppBarCommand"
             data-win-options="{
@@ -70,42 +70,50 @@
                 label: 'Volume', 
                 type: 'flyout',
                 flyout: select('#volumeFlyout')}">
-        </button>
-        <button id="loginflybtn"
-            data-win-control="WinJS.UI.AppBarCommand"
-            data-win-options="{
-                id: 'loginflyout', 
-                icon: 'contact', 
-                label: 'Login', 
-                type: 'flyout',
-                flyout: select('#loginFlyout')}">
-        </button>
+        </button>        
     </div>
     <div id="kidsFlyout"
             data-win-control="WinJS.UI.Flyout" style="overflow:hidden;">
         <select id="selectkids" size="2">
+            <option>5's Table</option> <!--0-->
+            <option>10's Table</option><!--1-->
         </select>
     </div>
     <div id="pageFlyout"
             data-win-control="WinJS.UI.Flyout" style="overflow:hidden;">
         <select id="selectpage" size="12">
+            <option id="L1" disabled>1's Table</option><!--1-->
+            <option id="L2" disabled>2's Table</option><!--2-->
+            <option id="L3" disabled>3's Table</option><!--3-->            
+            <option id="L4" disabled>4's Table</option><!--4-->
+            <option id="L5" disabled>5's Table</option><!--5-->         
+            <option id="L6" disabled>6's Table</option><!--6-->
+            <option id="L7" disabled>7's Table</option><!--7-->            
+            <option id="L8" disabled>8's Table</option><!--5-->         
+            <option id="L9" disabled>9's Table</option><!--6-->
+            <option id="L10" disabled>10's Table</option><!--7-->            
+            <option id="L11" disabled>11's Table</option><!--5-->         
+            <option id="L12" disabled>12's Table</option><!--6-->          
         </select>
     </div>
     <div id="advancedFlyout"
             data-win-control="WinJS.UI.Flyout" style="overflow:hidden;">
         <select id="selectadvanced" size="10">
+            <option id="L13" disabled>13's Table</option><!--1-->
+            <option id="L14" disabled>14's Table</option><!--2-->
+            <option id="L15" disabled>15's Table</option><!--3-->            
+            <option id="L16" disabled>16's Table</option><!--4-->
+            <option id="L17" disabled>17's Table</option><!--5-->         
+            <option id="L18" disabled>18's Table</option><!--6-->
+            <option id="L19" disabled>19's Table</option><!--7-->            
+            <option id="L20" disabled>20's Table</option><!--5-->         
+            <option id="L21" disabled>21's Table</option><!--6-->
+            <option id="L22" disabled>22's Table</option><!--7-->
         </select>
     </div>
     <div id="volumeFlyout"
             data-win-control="WinJS.UI.Flyout">
         <h3>Volume</h3> <input id="volume" type="range" />
-    </div>
-    <div id="loginFlyout"
-        data-win-control="WinJS.UI.Flyout">
-        <h3>Login</h3> Username: <input id="usrName" type="text" value="Anonymous" />
-        <br />
-        <span id="login_success" style="visibility:hidden">Login successful :)</span>
-        <span id="login_failed" style="visibility:hidden">Login failed :(</span>
-    </div>
+    </div>    
 </body>
 </html>

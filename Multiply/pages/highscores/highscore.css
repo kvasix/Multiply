@@ -19,13 +19,13 @@
     width: 9%;
 }
 
-th {    
+#highscores th {    
     background-color:black;
     border:1px solid white;
     text-align:center;
 }
 
-td {    
+#highscores td {    
     background-color:black;
     border: 1px 1px 0px 0px solid white;
     text-align:center;

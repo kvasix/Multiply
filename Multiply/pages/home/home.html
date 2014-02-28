@@ -17,14 +17,24 @@
     <!-- The content that will be loaded and displayed. -->
     <div class="fragment homepage">
         <header aria-label="Header content" role="banner">
-            <!-- <button class="win-backbutton" aria-label="Back" disabled type="button"></button>-->
+            <!--<button class="win-backbutton" aria-label="Back" disabled type="button"></button>-->
             <h1 class="titlearea win-type-ellipsis">
                 <span id="greetings" class="pagetitle"></span>
             </h1>
         </header>
         <section aria-label="Main content" role="main">
-            <p>You are in Level: <span id="level"></span></p>
+            <p id="userStatus"></p>
+            <p>You are in luck we have added a new Labs page, where we test our new features and depending on your feedback, we will add it in our next build.</p>
+            <div id="logindiv"><b>
+                    <span>UserName:</span>&nbsp;&nbsp;&nbsp;<input type="text" name="sid" id="sid" /><br /><br />
+                    <span>Password:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" name="pass" id="pass" />
+                </b><br /><br />
+                    <button id="login">Log Me In!</button>
+                    <a href="http://www.kumonivanhoe.com.au" style="float:right;">Forgot Password?</a>
+            </div>
+            <button id="signout">Sign out!</button>
         </section>
     </div>
+    
 </body>
 </html>
