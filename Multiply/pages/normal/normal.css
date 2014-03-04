@@ -20,20 +20,36 @@
 #readTable {
     position:absolute;
     top: 24%;
-    left: 15%;
+    left: 12%;
     text-align:right;
+    font-family:'Arial';
+    font-style:oblique;
+    font-weight:900;
+    font-size:xx-large;
 }
 
 #testTable {
-    position:absolute;
+    position: absolute;
     top: 24%;
     left: 54%;
-    text-align:right;
-    visibility:hidden;
+    text-align: right;
+    font-family: 'Arial';
+    font-style: oblique;
+    font-weight: 900;
+    font-size: xx-large;
+    visibility: hidden;
 }
 
-td {
-    position:relative;
-    width: 3em;
-    height: 3em;
-}
+    #readTable td, #testTable td {
+        position: relative;
+        width: 60px;
+        height: 30px;
+    }
+
+    #testTable td {
+        padding: 0;
+    }
+
+        #testTable td > input {
+            max-width: 30px;
+        }

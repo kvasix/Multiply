@@ -37,8 +37,8 @@
                 id('volume').value = localSettings.values["volume"] * 100;
             }
             else {
-                id('volume').value = 100;
-                localSettings.values["volume"] = 1.0;
+                id('volume').value = 50;
+                localSettings.values["volume"] = 0.5;
             }
             
             id('home').addEventListener("click", homeBoard, false);

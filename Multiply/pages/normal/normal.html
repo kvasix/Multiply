@@ -19,14 +19,14 @@
         <header aria-label="Header content" role="banner">
             <!-- <button class="win-backbutton" aria-label="Back" disabled type="button"></button>-->
             <h1 class="titlearea win-type-ellipsis">
-                <span class="pagetitle">Ain't be afraid to multiply!</span>
+                <span class="pagetitle">Ain't afraid to multiply!</span>
             </h1>
         </header>
         <section aria-label="Main content" role="main">
             <span id="mistakesBox" style="visibility:hidden">Number of Mistakes: <span id="mistakeCount" style='color: red;'>0</span></span>
-            <span id="timeBox" style="position:absolute; right:9%">Time Elapsed: <span id="timeCounter"></span></span>
-            <input type="button" id="reset" value="Reset" style="position:absolute; top:21%; right:12%" />
-            <span id="audioselectSpan" style="visibility:hidden;"> Select Audio Speed: </span>
+            <span id="timeBox" style="position:absolute; right:9%; visibility:hidden;">Time Elapsed: <span id="timeCounter"></span></span>
+            <input type="button" id="reset" value="Reset" style="position:absolute; top:21%; right:12%; visibility:hidden;" />
+            <div id="audioselectSpan" style="visibility:hidden;"><span id="duration"></span> Select Audio Speed: </div>
             <table id="readTable"></table>
             <input type="button" id="showTest" value="Bring it on!" style="position:absolute; top:54%; left:60%" />
             <table id="testTable"></table>

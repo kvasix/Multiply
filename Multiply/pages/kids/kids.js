@@ -68,6 +68,7 @@
                 resBox.addEventListener("keydown", checkandmovefocus, false);
                 resBox.addEventListener("focusout", checkResult, false);
                 resBox.size = 3;
+                resBox.maxLength = 3;
                 isset[var_num - TABLE_START_NUM] = false;
                 result.appendChild(resBox);
 
@@ -82,33 +83,29 @@
 
             id('reset').addEventListener("click", resetTable, false);
             id('showTest').addEventListener("click", showTable, false);
-
-            timeCtrl = setInterval(timer, 500);
-
+            
             if (fixed_num < 10) {
                 audioTable = new Array();
-                audioTable[0] = new Audio("/sounds/0" + fixed_num + ".wma");
-                audioTable[0].load();
+                for (var i = 0; i < 3; i++) {
+                    audioTable[i] = new Audio("/sounds/" + i + "" + fixed_num + ".wma");
+                    audioTable[i].load();
 
-                audioTable[1] = new Audio("/sounds/1" + fixed_num + ".wma");
-                audioTable[1].load();
-
-                audioTable[2] = new Audio("/sounds/2" + fixed_num + ".wma");
-                audioTable[2].load();
-
-                var select = document.createElement("select");
-                select.id = "selecttableaudio";
-
-                for (var i = 1; i <= 3; i++) {
-                    var option = document.createElement("option");
-                    option.innerHTML = "Speed " + i;
-                    select.appendChild(option);
+                    var button = document.createElement("button");
+                    button.id = i;
+                    button.addEventListener("click", function () { readTable(parseInt(this.id)); }, false);//readTable(i) doesn't work;
+                    button.innerText = "Speed" + (i + 1);
+                    id("audioselectSpan").appendChild(button);
                 }
-                select.addEventListener("click", changeSpeed, false);
-                id("audioselectSpan").appendChild(select);
                 id("audioselectSpan").style.visibility = "visible";
             }
-
+            /*           
+           audioTable[0].addEventListener("timeupdate", function () {
+               var duration = document.getElementById('duration');
+               var s = parseInt(audioTable[0].currentTime % 60);
+               var m = parseInt((audioTable[0].currentTime / 60) % 60);
+               duration.innerHTML = m + '.' + s + 'sec';
+           }, false);
+           */
             gameover = false;
         },
 
@@ -234,9 +231,13 @@
         id('audioselectSpan').style.visibility = "hidden";
         id('testTable').style.visibility = "visible";
         id('mistakesBox').style.visibility = "visible";
+        id('timeBox').style.visibility = "visible";
+        id('reset').style.visibility = "visible";
+        timeCtrl = setInterval(timer, 500);
 
-        for (var i = 0; i < 3; i++)
-            if (!audioTable[i].paused)
-                audioTable[i].pause();
+        if(fixed_num < 10) 
+            for (var i = 0; i < 3; i++)
+                if (!audioTable[i].paused)
+                    audioTable[i].pause();
     }
 })();

@@ -88,7 +88,6 @@
             id('reset').addEventListener("click", resetTable, false);
             id('showTest').addEventListener("click", showTable, false);
 
-            timeCtrl = setInterval(timer, 500);
             gameover = false;
         },
 
@@ -203,5 +202,8 @@
         id('showTest').style.visibility = "hidden";
         id('audioselectSpan').style.visibility = "hidden";
         id('testTable').style.visibility = "visible";
+        id('timeBox').style.visibility = "visible";
+        id('reset').style.visibility = "visible";
+        timeCtrl = setInterval(timer, 500);
     }
 })();
