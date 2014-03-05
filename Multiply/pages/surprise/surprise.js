@@ -15,10 +15,7 @@
         // populates the page elements with the app's data.
         ready: function (element, options) {
             // TODO: Initialize the page here.
-            mistakeCount = 0;
-            max_right = TABLE_SIZE;
-            mistakes = new Array();
-
+            
             fixed_nums = new Array();
             for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
                 // Couldn't find localSettings.values["level"] in fixed_nums
@@ -50,6 +47,9 @@
                 id('readTable').appendChild(row);
             }
 
+            mistakeCount = 0;
+            max_right = TABLE_SIZE;
+            mistakes = new Array();
             isset = new Array();
             for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
                 var row = document.createElement("tr");
@@ -121,7 +121,7 @@
             //console.log(thisBox.id * fixed_nums[thisBox.id - TABLE_START_NUM]);
             if (thisBox.id * fixed_nums[thisBox.id - TABLE_START_NUM] == thisBox.value) {
                 id("mistakeCount").innerHTML = mistakeCount;
-                document.getElementById(thisBox.id).setAttribute("style", "background-color:white");
+                thisBox.setAttribute("style", "background-color:white");
 /*
                 var boxid;
                 for (var i = TABLE_START_NUM; i < TABLE_START_NUM + TABLE_SIZE; i++) {
@@ -162,7 +162,7 @@
             else {
                 mistakes[mistakeCount++] = thisBox.id +"*"+ fixed_nums[thisBox.id - TABLE_START_NUM];
                 id("mistakeCount").innerHTML = mistakeCount + ": Check that Again!";
-                document.getElementById(thisBox.id).setAttribute("style", "background-color:red");
+                thisBox.setAttribute("style", "background-color:red");
                 return false;
             }
         }
@@ -184,9 +184,9 @@
         for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
             //fixed_nums[var_num - TABLE_START_NUM] = Math.floor(Math.random() * (parseInt(localSettings.values["level"]) - 1)) + 1;
 
-            id(var_num * fixed_nums[var_num - TABLE_START_NUM]).value = "";
-            id(var_num * fixed_nums[var_num - TABLE_START_NUM]).setAttribute("style", "background-color:white");
-            isset[var_num - TABLE_START_NUM] = false;
+            id(var_num).value = "";
+            id(var_num).setAttribute("style", "background-color:white");
+            isset[var_num] = false;
         }
         max_right = TABLE_SIZE;
         hours = 0, mins = 0, secs = 0;

@@ -14,9 +14,6 @@
         // populates the page elements with the app's data.
         ready: function (element, options) {
             // TODO: Initialize the page here.
-            mistakeCount = 0;
-            max_right = TABLE_SIZE;
-            mistakes = new Array();
             fixed_num = parseInt(options.toString());
 
             for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
@@ -46,6 +43,9 @@
                 id('readTable').appendChild(row);
             }
 
+            mistakeCount = 0;
+            max_right = TABLE_SIZE;
+            mistakes = new Array();
             isset = new Array();
             for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
                 var row = document.createElement("tr");
@@ -69,7 +69,6 @@
                 resBox.addEventListener("keydown", checkandmovefocus, false);
                 resBox.addEventListener("focusout", checkResult, false);
                 resBox.size = 3;
-                isset[var_num - TABLE_START_NUM] = false;
                 result.appendChild(resBox);
 
                 row.appendChild(numCol);
@@ -78,6 +77,8 @@
                 row.appendChild(equals);
                 row.appendChild(result);
 
+                isset[var_num - TABLE_START_NUM] = false;
+                mistakes[var_num - TABLE_START_NUM] = false;
                 id('testTable').appendChild(row);
             }
 
@@ -91,8 +92,8 @@
                     audioTable[i].load();
 
                     var button = document.createElement("button");
-                    button.id = i;
-                    button.addEventListener("click",function () { readTable(parseInt(this.id)); }, false);//readTable(i) doesn't work;
+                    button.id = "Speed" + i;
+                    button.addEventListener("click",function () { readTable(parseInt(this.id.replace("Speed", ""))) }, false);//readTable(i) doesn't work;
                     button.innerText = "Speed" + (i + 1);
                     id("audioselectSpan").appendChild(button);
                 }
@@ -153,7 +154,7 @@
         if (thisBox.value && !gameover) {
             if (thisBox.id == thisBox.value) {
                 id("mistakeCount").innerHTML = mistakeCount;
-                document.getElementById(thisBox.id).setAttribute("style", "background-color:white");
+                thisBox.setAttribute("style", "background-color:white");
 
                 if (!isset[parseInt(thisBox.id) / fixed_num - TABLE_START_NUM]) {
                     --max_right;
@@ -187,9 +188,10 @@
                 return true;
             }
             else {
-                mistakes[mistakeCount++] = parseInt(thisBox.id) / fixed_num;
+                mistakeCount++;
+                mistakes[parseInt(thisBox.id) / fixed_num - TABLE_START_NUM] = true;
                 id("mistakeCount").innerHTML = mistakeCount + ": Check that Again!";
-                document.getElementById(thisBox.id).setAttribute("style", "background-color:red");
+                thisBox.setAttribute("style", "background-color:red");
                 return false;
             }
         }
@@ -212,12 +214,7 @@
             id(var_num * fixed_num).value = "";
             id(var_num * fixed_num).setAttribute("style", "background-color:white");
             isset[var_num - TABLE_START_NUM] = false;
-
-            id(var_num * fixed_num).removeEventListener("keydown", checkandmovefocus, false);
-            id(var_num * fixed_num).removeEventListener("focusout", checkResult, false);
-
-            //id(var_num * fixed_num).addEventListener("keydown", checkandmovefocus, false);
-            //id(var_num * fixed_num).addEventListener("focusout", checkResult, false);
+            mistakes[var_num - TABLE_START_NUM] = false;
         }
         max_right = TABLE_SIZE;
         hours = 0, mins = 0, secs = 0;
