@@ -6,7 +6,7 @@
     var timeCtrl = null, fixed_num = -1;
     var appData = Windows.Storage.ApplicationData.current;
     var localSettings = appData.localSettings;
-    var mistakeCount = 0, max_right = 11;
+    var mistakeCount, max_right, mistakes;
     var isset, gameover;
 
     WinJS.UI.Pages.define("/pages/kids/kids.html", {
@@ -16,6 +16,7 @@
             // TODO: Initialize the page here.
             mistakeCount = 0;
             max_right = TABLE_SIZE;
+            mistakes = new Array();
             fixed_num = parseInt(options.toString());
 
             for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
@@ -145,16 +146,17 @@
     function checkandmovefocus(eventInfo) {
         if (eventInfo.keyCode == 13) {
             var isRight = checkResult(eventInfo);
-            console.log(isRight);
+            //console.log(isRight);
             if (isRight) {
                 var nextBoxID = parseInt(eventInfo.currentTarget.id) + fixed_num;
-                console.log(nextBoxID);
+                //console.log(nextBoxID);
                 if (id(nextBoxID))
                     id(nextBoxID).focus();
             }
         }
     }
 
+    
     function checkResult(eventInfo) {
         var thisBox = eventInfo.currentTarget;
         if (thisBox.value && !gameover) {
@@ -183,7 +185,7 @@
                 return true;
             }
             else {
-                mistakeCount++;
+                mistakes[mistakeCount++] = parseInt(thisBox.id) / fixed_num;
                 id("mistakeCount").innerHTML = mistakeCount + ": Check that Again!";
                 document.getElementById(thisBox.id).setAttribute("style", "background-color:red");
                 return false;

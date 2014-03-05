@@ -6,7 +6,7 @@
     var timeCtrl = null;
     var appData = Windows.Storage.ApplicationData.current;
     var localSettings = appData.localSettings;
-    var mistakeCount = 0, max_right;
+    var mistakeCount = 0, max_right, mistakes;
     var fixed_nums;
     var isset, gameover;
 
@@ -17,6 +17,7 @@
             // TODO: Initialize the page here.
             mistakeCount = 0;
             max_right = TABLE_SIZE;
+            mistakes = new Array();
 
             fixed_nums = new Array();
             for (var var_num = TABLE_START_NUM; var_num < TABLE_START_NUM + TABLE_SIZE; var_num++) {
@@ -67,7 +68,7 @@
 
                 var result = document.createElement("td");
                 var resBox = document.createElement("input");
-                resBox.id = var_num * fixed_nums[var_num - TABLE_START_NUM];
+                resBox.id = var_num;// * fixed_nums[var_num - TABLE_START_NUM];
                 resBox.type = "number";
                 resBox.addEventListener("keydown", checkandmovefocus, false);
                 resBox.addEventListener("focusout", checkResult, false);
@@ -103,11 +104,11 @@
     function checkandmovefocus(eventInfo) {
         if (eventInfo.keyCode == 13) {
             var isRight = checkResult(eventInfo);
-            console.log(isRight);
+            //console.log(isRight);
             if (isRight) {
                 var boxid = parseInt(eventInfo.currentTarget.getAttribute("boxid"));
                 var nextBoxID = (boxid + 1) * fixed_nums[boxid - TABLE_START_NUM + 1];
-                console.log(nextBoxID);
+                //console.log(nextBoxID);
                 if(id(nextBoxID))
                     id(nextBoxID).focus();
             }
@@ -117,7 +118,8 @@
     function checkResult(eventInfo) {
         var thisBox = eventInfo.currentTarget;
         if (thisBox.value && !gameover) {
-            if (thisBox.id == thisBox.value) {
+            //console.log(thisBox.id * fixed_nums[thisBox.id - TABLE_START_NUM]);
+            if (thisBox.id * fixed_nums[thisBox.id - TABLE_START_NUM] == thisBox.value) {
                 id("mistakeCount").innerHTML = mistakeCount;
                 document.getElementById(thisBox.id).setAttribute("style", "background-color:white");
 /*
@@ -131,10 +133,10 @@
                 */
 
                 var boxid = parseInt(eventInfo.currentTarget.getAttribute("boxid"));
-                console.log(boxid);
-                if (boxid && !isset[boxid - TABLE_START_NUM]) {
+                //console.log(boxid);
+                if (boxid && !isset[thisBox.id - TABLE_START_NUM]) {
                     --max_right;
-                    isset[boxid - TABLE_START_NUM] = true;
+                    isset[thisBox.id - TABLE_START_NUM] = true;
                 }
 
                 if (!max_right) {
@@ -148,7 +150,7 @@
                     var msgBox = new Windows.UI.Popups.MessageDialog(message);
                     msgBox.showAsync();
 
-                    var score_post_string = "sid=" + localSettings.values["sid"] + "&level=" + "surprise";
+                    var score_post_string = "sid=" + localSettings.values["sid"] + "&level=" + 24;
                     score_post_string += "&mistakes=" + mistakeCount + "&timetaken=" + ((hours * 60 + mins) * 60 + secs);
                     score_post(score_post_string);
 
@@ -158,7 +160,7 @@
                 return true;
             }
             else {
-                mistakeCount++;
+                mistakes[mistakeCount++] = thisBox.id +"*"+ fixed_nums[thisBox.id - TABLE_START_NUM];
                 id("mistakeCount").innerHTML = mistakeCount + ": Check that Again!";
                 document.getElementById(thisBox.id).setAttribute("style", "background-color:red");
                 return false;
