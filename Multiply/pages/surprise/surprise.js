@@ -142,20 +142,16 @@
                     //applaudAudio.volume = localSettings.values["volume"];
                     //applaudAudio.play();
 
-                    if (localSettings.values["highscores"]) {
-                        localSettings.values["highscores"] += ',{ "user": "' + localSettings.values["usrName"] + '", "levelType": "Medium", "level": ' + localSettings.values["level"];
-                        localSettings.values["highscores"] += ', "mistakes": ' + mistakeCount + ', "hours": ' + hours + ', "mins": ' + mins + ', "secs": ' + secs + ' }';
-                    }
-                    else {
-                        localSettings.values["highscores"] = '{ "user":"' + localSettings.values["usrName"] + '", "levelType": "Medium", "level": ' + localSettings.values["level"];
-                        localSettings.values["highscores"] += ', "mistakes": ' + mistakeCount + ', "hours": ' + hours + ', "mins": ' + mins + ', "secs": ' + secs + ' }';
-                    }
-
                     var message = "Good Job, " + localSettings.values["usrName"] + "!!! You've completed this level in " +
                         (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs +
                          " with " + mistakeCount + " mistakes. Why don't you try it again?";
                     var msgBox = new Windows.UI.Popups.MessageDialog(message);
                     msgBox.showAsync();
+
+                    var score_post_string = "sid=" + localSettings.values["sid"] + "&level=" + "surprise";
+                    score_post_string += "&mistakes=" + mistakeCount + "&timetaken=" + ((hours * 60 + mins) * 60 + secs);
+                    score_post(score_post_string);
+
                     gameover = true;
                     id('reset').setAttribute("disabled", true);
                 }
@@ -175,13 +171,11 @@
     }
 
     var hours = 0, mins = 0, secs = 0;
-    var blink = true;
-    var separator = ":";
     function timer() {
-        blink ? (++secs, separator = " ", blink = false) : (separator = ":", blink = true);
+        ++secs;
         (secs == 60) ? (++mins, secs = 0) : true;
         (mins == 60) ? (++hours, mins = 0) : true;
-        id('timeCounter').innerHTML = (hours < 10 ? "0" : "") + hours + separator + (mins < 10 ? "0" : "") + mins + separator + (secs < 10 ? "0" : "") + secs;
+        id('timeCounter').innerHTML = (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs;
     }
 
     function resetTable() {
@@ -204,6 +198,6 @@
         id('testTable').style.visibility = "visible";
         id('timeBox').style.visibility = "visible";
         id('reset').style.visibility = "visible";
-        timeCtrl = setInterval(timer, 500);
+        timeCtrl = setInterval(timer, 1000);
     }
 })();

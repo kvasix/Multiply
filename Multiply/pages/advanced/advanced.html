@@ -11,6 +11,7 @@
 
     <link href="/css/default.css" rel="stylesheet" />
     <link href="/pages/advanced/advanced.css" rel="stylesheet" />
+    <script src="/js/levels.js"></script>
     <script src="/pages/advanced/advanced.js"></script>
 </head>
 <body>
@@ -24,7 +25,7 @@
         </header>
         <section aria-label="Main content" role="main">
             <span id="mistakesBox" style="visibility:hidden">Number of Mistakes: <span id="mistakeCount" style='color: red;'>0</span></span>
-            <span id="timeBox" style="position:absolute; right:9%; visibility:hidden;">Time Elapsed: <span id="timeCounter"></span></span>
+            <span id="timeBox" style="position:absolute; right:9%; visibility:hidden;">Time Elapsed: <span id="timeCounter">00:00:00</span></span>
             <input type="button" id="reset" value="Reset" style="position:absolute; top:21%; right:12%; visibility:hidden;" />
             <table id="readTable"></table>
             <input type="button" id="showTest" value="Bring it on!" style="position:absolute; top:54%; left:60%" />
