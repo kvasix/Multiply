@@ -151,7 +151,7 @@
                     msgBox.showAsync();
 
                     var score_post_string = "sid=" + localSettings.values["sid"] + "&level=" + 24;
-                    score_post_string += "&mistakes=" + mistakeCount + "&timetaken=" + ((hours * 60 + mins) * 60 + secs);
+                    score_post_string += "&mistakeCount=" + mistakeCount + "&mistakes=" + "" + "&timetaken=" + ((hours * 60 + mins) * 60 + secs);
                     score_post(score_post_string);
 
                     gameover = true;

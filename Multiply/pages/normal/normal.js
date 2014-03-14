@@ -78,7 +78,7 @@
                 row.appendChild(result);
 
                 isset[var_num - TABLE_START_NUM] = false;
-                mistakes[var_num - TABLE_START_NUM] = false;
+                mistakes[var_num - TABLE_START_NUM] = 0;//false
                 id('testTable').appendChild(row);
             }
 
@@ -179,7 +179,7 @@
                     msgBox.showAsync();
 
                     var score_post_string = "sid=" + localSettings.values["sid"] + "&level=" + fixed_num;
-                    score_post_string += "&mistakes=" + mistakeCount + "&timetaken=" + ((hours * 60 + mins) * 60 + secs);
+                    score_post_string += "&mistakeCount=" + mistakeCount + "&mistakes=" + JSON.stringify(mistakes) + "&timetaken=" + ((hours * 60 + mins) * 60 + secs);
                     score_post(score_post_string);
 
                     gameover = true;
@@ -189,7 +189,7 @@
             }
             else {
                 mistakeCount++;
-                mistakes[parseInt(thisBox.id) / fixed_num - TABLE_START_NUM] = true;
+                mistakes[parseInt(thisBox.id) / fixed_num - TABLE_START_NUM] += 1;//true;
                 id("mistakeCount").innerHTML = mistakeCount + ": Check that Again!";
                 thisBox.setAttribute("style", "background-color:red");
                 return false;
@@ -214,7 +214,7 @@
             id(var_num * fixed_num).value = "";
             id(var_num * fixed_num).setAttribute("style", "background-color:white");
             isset[var_num - TABLE_START_NUM] = false;
-            mistakes[var_num - TABLE_START_NUM] = false;
+            mistakes[var_num - TABLE_START_NUM] = 0;//false;
         }
         max_right = TABLE_SIZE;
         hours = 0, mins = 0, secs = 0;

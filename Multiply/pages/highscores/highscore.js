@@ -14,7 +14,7 @@
             var parsedData;
             WinJS.xhr({
                 type: "post",
-                url: "http://www.kumonivanhoe.com.au/multiply/scorecheck.php",
+                url: "http://kumonivanhoe.com.au/multiply/scorecheck.php",
                 responseType: 'json',
                 headers: { "Content-type": "application/x-www-form-urlencoded" },
                 data: score_post_string
@@ -40,7 +40,7 @@
                       //console.log(highscore_list);
 
                       var highscore_table = document.getElementById("highscores");
-                      highscore_table.innerHTML = "<tr><th>Date</th><th>Level</th><th>Number of Mistakes</th><th>Timetaken in secs</th></tr>";
+                      highscore_table.innerHTML = "<tr><th>Date</th><th>Level</th><th>Individual Mistakes</th><th>Total Mistakes</th><th>Timetaken in secs</th></tr>";
                       var row = 0;
                       while (highscore_list[row]) {
                           var row_html = document.createElement("tr");
@@ -54,8 +54,19 @@
                           row_html.appendChild(level);
 
                           var mistakes = document.createElement("td");
-                          mistakes.innerText = highscore_list[row].mistakecount;
+                          var mistakeArray = JSON.parse(highscore_list[row].mistakes);
+                          mistakes.innerText = "";
+                          for (var num = 1; num < 12; num++) {
+                              if(mistakeArray[num-1])
+                                mistakes.innerText += num + " : " + mistakeArray[num-1] + ", ";
+                          }
+                          if (mistakeArray[12 - 1])
+                            mistakes.innerText += 12 + " : " + mistakeArray[12 - 1];
                           row_html.appendChild(mistakes);
+
+                          var mistakecount = document.createElement("td");
+                          mistakecount.innerText = highscore_list[row].mistakecount;
+                          row_html.appendChild(mistakecount);
 
                           var timetaken = document.createElement("td");
                           timetaken.innerText = highscore_list[row].timetaken;//highscore_list[row].hours * 3600 + highscore_list[row].mins * 60 + highscore_list[row].secs;
