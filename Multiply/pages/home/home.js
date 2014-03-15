@@ -19,8 +19,10 @@
             if (localSettings.values["level"] >= 0) {
                 id("greetings").innerHTML = "Hi " + localSettings.values["usrName"] + "! Welcome to Multiply.";
                 id("userStatus").innerHTML = "You are in Level: " + localSettings.values["level"];
+                id("remoteUpdatesArea").innerHTML = localSettings.values["remoteUpdate"];
                 id("logindiv").style.display = "none";
                 id("signout").style.display = "block";
+                id("remoteUpdatesArea").style.visibility = "visible";
             }
             else {
                 id("greetings").innerHTML = "Hi! Welcome to Multiply.";
@@ -29,6 +31,7 @@
                 id('pass').value = "";
                 id("logindiv").style.display = "block";
                 id("signout").style.display = "none";
+                id("remoteUpdatesArea").style.visibility = "hidden";
             }
 
             id('login').addEventListener("click", LogIn, false);
@@ -60,18 +63,21 @@
         }).done(   //
           function complete(result) {
               if (result.status === 200) {
-                  console.log(result.responseText);
+                  //console.log(result.responseText);
                   var jsonContent = JSON.parse(result.responseText);//eval('(' + result.responseText + ')');//result.responseJSON; //
-                  console.log(jsonContent);
+                  //console.log(jsonContent);
 
                   if (jsonContent['loginsuccess']) {
                       localSettings.values["sid"] = jsonContent['sid'];
                       localSettings.values["usrName"] = jsonContent['usrName'];//"Gautam";//get from server
                       localSettings.values["level"] = jsonContent['level'];//23;//get from server
-                      id("greetings").innerHTML = "Hi " + localSettings.values["usrName"] + "! Welcome to Multiply.";
+                      id("greetings").innerHTML = "Hi " + localSettings.values["usrName"] + "! Welcome to Number Magic.";
                       id("userStatus").innerHTML = "You are in Level: " + localSettings.values["level"];
                       id("logindiv").style.display = "none";
                       id("signout").style.display = "block";
+                      localSettings.values["remoteUpdate"] = jsonContent["remoteHTMLMsg"];
+                      id("remoteUpdatesArea").innerHTML = localSettings.values["remoteUpdate"];
+                      id("remoteUpdatesArea").style.visibility = "visible";
                   } else {
                       id("greetings").innerHTML = "Login Failed!";
                       id("userStatus").innerHTML = "Please enter the right username and password";
@@ -98,6 +104,7 @@
         id('pass').value = "";
         id("logindiv").style.display = "block";
         id("signout").style.display = "none";
+        id("remoteUpdatesArea").style.visibility = "hidden";
     }
 
     function id(element) {
