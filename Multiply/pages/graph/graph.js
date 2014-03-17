@@ -14,7 +14,7 @@
             var parsedData;
             WinJS.xhr({
                 type: "post",
-                url: "http://www.kumonivanhoe.com.au/multiply/scorecheck.php",
+                url: "http://kvasix.com/Multiply/scorecheck.php",
                 responseType: 'json',
                 headers: { "Content-type": "application/x-www-form-urlencoded" },
                 data: score_post_string

@@ -42,7 +42,7 @@
     function LogIn() {
         /*
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://www.kumonivanhoe.com.au/multiply/index.php", true);
+        xhr.open("POST", "http://www.kvasix.com/Multiply/index.php", true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
                 if (xhr.status === 200) {
@@ -56,7 +56,7 @@
         var user_login_post_string = "sid=" + id('sid').value + "&pass=" + id('pass').value;
         WinJS.xhr({
             type: "post",
-            url: "http://www.kumonivanhoe.com.au/multiply/index.php",
+            url: "http://www.kvasix.com/Multiply/index.php",
             responseType: 'json',
             headers: { "Content-type": "application/x-www-form-urlencoded" },
             data: user_login_post_string
@@ -80,7 +80,7 @@
                       id("remoteUpdatesArea").style.visibility = "visible";
                   } else {
                       id("greetings").innerHTML = "Login Failed!";
-                      id("userStatus").innerHTML = "Please enter the right username and password";
+                      id("userStatus").innerHTML = jsonContent["status"];//"Please enter the right username and password";
                   }
               }
           },
