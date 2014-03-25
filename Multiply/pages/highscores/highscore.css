@@ -19,14 +19,23 @@
     width: 9%;
 }
 
-#highscores th {    
+#scoretable th {    
     background-color:black;
     border:1px solid white;
     text-align:center;
 }
 
-#highscores td {    
+#scoretable td {    
     background-color:black;
     border: 1px 1px 0px 0px solid white;
     text-align:center;
+}
+
+#scoretable {
+    width:81%;
+
+    font-family:'Arial';
+    font-style:oblique;
+    font-weight:300;
+    font-size:large;
 }

@@ -39,8 +39,8 @@
                       var highscore_list = JSON.parse(result.responseText);//eval('(' + result.responseText + ')');//result.responseJSON; //
                       //console.log(highscore_list);
 
-                      var highscore_table = document.getElementById("highscores");
-                      highscore_table.innerHTML = "<tr><th>Date</th><th>Level</th><th>Individual Mistakes</th><th>Total Mistakes</th><th>Timetaken in secs</th></tr>";
+                      var highscore_table = document.getElementById("scoretable");
+                      highscore_table.innerHTML = "<tr><th>Date</th><th>Table</th><th>Individual Mistakes (times : Number of Mistakes)</th><th>Total Mistakes</th><th>Timetaken in secs</th></tr>";
                       var row = 0;                      
                       while (highscore_list[row]) {
                           var row_html = document.createElement("tr");
@@ -57,13 +57,14 @@
                           var mistakeArray = JSON.parse(highscore_list[row].mistakes);
                           mistakes.innerText = "";
                           var miscount = 0;
-                          for (var num = 1; num < 12; num++) {
-                              if(mistakeArray[num-1])
+                          for (var num = 1; num <= 12; num++) {
+                              if (mistakeArray[num - 1]) {
                                   mistakes.innerText += num + " : " + mistakeArray[num - 1] + ", ";
-                              miscount += mistakeArray[num - 1];
+                                  miscount += mistakeArray[num - 1];
+                              }
                           }
-                          if (mistakeArray[12 - 1])
-                            mistakes.innerText += 12 + " : " + mistakeArray[12 - 1];
+                          //if (mistakeArray[12 - 1])
+                          //  mistakes.innerText += 12 + " : " + mistakeArray[12 - 1];
                           row_html.appendChild(mistakes);
 
                           var mistakecount = document.createElement("td");
