@@ -74,3 +74,16 @@
     font-weight: 900;
     font-size: large;
 }
+
+.resbox[type='number'] {
+    font-family: 'Arial';
+    font-weight: 900;
+    font-size: large;
+}
+
+#mistakesBox, #timeBox {
+    font-family: 'Arial';
+    font-style: oblique;
+    font-weight: 900;
+    font-size: large;
+}

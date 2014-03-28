@@ -67,6 +67,7 @@
                 var resBox = document.createElement("input");
                 resBox.id = var_num * fixed_num;
                 resBox.type = "number";
+                resBox.setAttribute("class","resbox");
                 resBox.addEventListener("keydown", checkandmovefocus, false);
                 resBox.addEventListener("focusin", setFocus, false);                
                 resBox.size = 3;
@@ -197,8 +198,8 @@
                     //applaudAudio.play();
                     
                     var message = "Good Job, " + localSettings.values["usrName"] + "!!! You've completed this level in " +
-                        (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs +
-                         " with " + mistakeCount + " mistakes. ";
+                        (hours < 10 ? "0" : "") + hours + "h " + (mins < 10 ? "0" : "") + mins + "m " + (secs < 10 ? "0" : "") + secs + "s " +
+                        " with " + mistakeCount + " mistakes. ";
                     var msgBox = new Windows.UI.Popups.MessageDialog(message);
                     msgBox.showAsync();
                     gameover = true;
@@ -225,7 +226,7 @@
         ++secs;
         (secs == 60) ? (++mins, secs = 0) : true;
         (mins == 60) ? (++hours, mins = 0) : true;
-        id('timeCounter').innerHTML = (hours < 10 ? "0" : "") + hours + ":" + (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + secs;
+        id('timeCounter').innerHTML = (hours < 10 ? "0" : "") + hours + "h " + (mins < 10 ? "0" : "") + mins + "m " + (secs < 10 ? "0" : "") + secs +"s";
     }
 
     function resetTable() {
