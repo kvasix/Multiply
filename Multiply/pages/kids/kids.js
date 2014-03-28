@@ -68,7 +68,7 @@
                 resBox.id = var_num * fixed_num;
                 resBox.type = "number";
                 resBox.addEventListener("keydown", checkandmovefocus, false);
-                resBox.addEventListener("focusout", checkResult, false);
+                resBox.addEventListener("focusin", setFocus, false);                
                 resBox.size = 3;
                 resBox.maxLength = 3;
                 result.appendChild(resBox);
@@ -83,6 +83,12 @@
                 mistakes[var_num - TABLE_START_NUM] = false;
                 id('testTable').appendChild(row);
             }
+
+            for (var in_num = 0; in_num < 10; in_num++) {
+                id("input" + in_num).addEventListener("click", typeInput, false);
+            }
+            id('inputClear').addEventListener("click", function () { if (focus_id_num != -1) id(focus_id_num).value = ""; }, false);
+            id('inputEnter').addEventListener("click", function () { if (focus_id_num != -1) checkandmovefocus(event) }, false);
 
             id('reset').addEventListener("click", resetTable, false);
             id('showTest').addEventListener("click", showTable, false);
@@ -144,23 +150,37 @@
         }
     }
 
-    var mistakeCount = 0, max_right = TABLE_SIZE;
-    function checkandmovefocus(eventInfo) {
-        if (eventInfo.keyCode == 13) {
-            var isRight = checkResult(eventInfo);
-            //console.log(isRight);
-            if (isRight) {
-                var nextBoxID = parseInt(eventInfo.currentTarget.id) + fixed_num;
-                //console.log(nextBoxID);
-                if (id(nextBoxID))
-                    id(nextBoxID).focus();
-            }
+    function typeInput(eventInfo) {
+        if (focus_id_num != -1) {
+            id(focus_id_num).value += this.id.replace("input", "");
         }
     }
 
+    var mistakeCount = 0, max_right = TABLE_SIZE;
+    function checkandmovefocus(eventInfo) {
+        var isRight = checkResult(id(focus_id_num));
+        //console.log(isRight);
+        if (isRight) {
+            var nextBoxID = parseInt(focus_id_num) + fixed_num;
+            //console.log(nextBoxID);
+            if (id(nextBoxID)) {
+                focus_id_num = -1;
+                id(nextBoxID).focus();
+            }
+        }        
+    }
+
+    var focus_id_num = -1;
+    function setFocus(eventInfo) {
+        eventInfo.preventDefault();
+        
+        if (focus_id_num != -1 && focus_id_num != eventInfo.currentTarget.id) {
+            checkResult(id(focus_id_num));
+        }
+        focus_id_num = eventInfo.currentTarget.id;
+    }
     
-    function checkResult(eventInfo) {
-        var thisBox = eventInfo.currentTarget;
+    function checkResult(thisBox) {        
         if (thisBox.value && !gameover) {
             if (thisBox.id == thisBox.value) {
                 id("mistakeCount").innerHTML = mistakeCount;
@@ -215,6 +235,7 @@
             isset[var_num - TABLE_START_NUM] = false;
             mistakes[var_num - TABLE_START_NUM] = false;
         }
+        id(fixed_num).focus();
         max_right = TABLE_SIZE;
         hours = 0, mins = 0, secs = 0;
         gameover = false;
@@ -225,9 +246,11 @@
         id('showTest').style.visibility = "hidden";
         id('audioselectSpan').style.visibility = "hidden";
         id('testTable').style.visibility = "visible";
+        id('inputTable').style.visibility = "visible";
         id('mistakesBox').style.visibility = "visible";
         id('timeBox').style.visibility = "visible";
         id('reset').style.visibility = "visible";
+        id(fixed_num).focus();
         timeCtrl = setInterval(timer, 1000);
 
         if(fixed_num < 10) 

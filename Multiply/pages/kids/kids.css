@@ -29,9 +29,9 @@
 }
 
 #testTable {
-    position: absolute;
+    position:absolute;
     top: 24%;
-    left: 54%;
+    left: 12%;
     text-align: right;
     font-family: 'Arial';
     font-style: oblique;
@@ -53,3 +53,24 @@
         #testTable td > input {
             max-width: 30px;
         }
+
+#inputTable {
+    position:absolute;
+    top: 30%;
+    left: 60%;
+    visibility:hidden;
+}
+
+    .pawn {
+        position:relative;        
+        width:90px;
+        height:90px;
+        border-radius: 69px;
+    }
+
+#inputClear, #inputEnter {
+    height:90px;
+    font-family: 'Arial';
+    font-weight: 900;
+    font-size: large;
+}

@@ -55,6 +55,16 @@
     </AppxManifest>
     <Content Include="css\default.css" />
     <Content Include="images\logo.png" />
+    <Content Include="images\pawns\0.jpg" />
+    <Content Include="images\pawns\1.jpg" />
+    <Content Include="images\pawns\2.jpg" />
+    <Content Include="images\pawns\3.jpg" />
+    <Content Include="images\pawns\4.jpg" />
+    <Content Include="images\pawns\5.jpg" />
+    <Content Include="images\pawns\6.jpg" />
+    <Content Include="images\pawns\7.jpg" />
+    <Content Include="images\pawns\8.jpg" />
+    <Content Include="images\pawns\9.jpg" />
     <Content Include="images\smalllogo.png" />
     <Content Include="images\splashscreen.png" />
     <Content Include="images\splashscreen.scale-100.png" />

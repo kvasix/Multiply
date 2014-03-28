@@ -71,7 +71,7 @@
                       localSettings.values["sid"] = jsonContent['sid'];
                       localSettings.values["usrName"] = jsonContent['usrName'];//"Gautam";//get from server
                       localSettings.values["level"] = jsonContent['level'];//23;//get from server
-                      id("greetings").innerHTML = "Hi " + localSettings.values["usrName"] + "! Welcome to Number Magic.";
+                      id("greetings").innerHTML = "Hi " + localSettings.values["usrName"] + "! Welcome to Multiply.";
                       id("userStatus").innerHTML = "You are in Level: " + localSettings.values["level"];
                       id("logindiv").style.display = "none";
                       id("signout").style.display = "block";
