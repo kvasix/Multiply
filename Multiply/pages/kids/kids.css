@@ -20,7 +20,7 @@
 #readTable {
     position:absolute;
     top: 24%;
-    left: 12%;
+    left: 9%;
     text-align:right;
     font-family:'Arial';
     font-style:oblique;
@@ -31,7 +31,7 @@
 #testTable {
     position:absolute;
     top: 24%;
-    left: 12%;
+    left: 9%;
     text-align: right;
     font-family: 'Arial';
     font-style: oblique;
@@ -57,7 +57,7 @@
 #inputTable {
     position:absolute;
     top: 30%;
-    left: 60%;
+    left: 54%;
     visibility:hidden;
 }
 

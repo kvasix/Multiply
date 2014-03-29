@@ -65,6 +65,16 @@
     <Content Include="images\pawns\7.jpg" />
     <Content Include="images\pawns\8.jpg" />
     <Content Include="images\pawns\9.jpg" />
+    <Content Include="images\pawns\down (1).jpg" />
+    <Content Include="images\pawns\down (10).jpg" />
+    <Content Include="images\pawns\down (2).jpg" />
+    <Content Include="images\pawns\down (3).jpg" />
+    <Content Include="images\pawns\down (4).jpg" />
+    <Content Include="images\pawns\down (5).jpg" />
+    <Content Include="images\pawns\down (6).jpg" />
+    <Content Include="images\pawns\down (7).jpg" />
+    <Content Include="images\pawns\down (8).jpg" />
+    <Content Include="images\pawns\down (9).jpg" />
     <Content Include="images\smalllogo.png" />
     <Content Include="images\splashscreen.png" />
     <Content Include="images\splashscreen.scale-100.png" />

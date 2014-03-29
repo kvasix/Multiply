@@ -67,8 +67,8 @@
                 var resBox = document.createElement("input");
                 resBox.id = var_num * fixed_num;
                 resBox.type = "number";
-                resBox.setAttribute("class","resbox");
-                resBox.addEventListener("keydown", checkandmovefocus, false);
+                resBox.setAttribute("class", "resbox");
+                //resBox.addEventListener("keydown", checkandmovefocus, false);
                 resBox.addEventListener("focusin", setFocus, false);                
                 resBox.size = 3;
                 resBox.maxLength = 3;
@@ -84,9 +84,11 @@
                 mistakes[var_num - TABLE_START_NUM] = false;
                 id('testTable').appendChild(row);
             }
-
+            
             for (var in_num = 0; in_num < 10; in_num++) {
-                id("input" + in_num).addEventListener("click", typeInput, false);
+                //id("input" + in_num).addEventListener("click", typeInput, false);
+                id("input" + in_num).addEventListener("mousedown", function (eventInfo) { this.src = '/images/pawns/down (' + (parseInt(eventInfo.currentTarget.id.replace('input', '')) + 1) + ').jpg';}, false);
+                id("input" + in_num).addEventListener("mouseup", function (eventInfo) { console.log(in_num); this.src = '/images/pawns/' + eventInfo.currentTarget.id.replace('input', '') + '.jpg'; typeInput(eventInfo); }, false);
             }
             id('inputClear').addEventListener("click", function () { if (focus_id_num != -1) id(focus_id_num).value = ""; }, false);
             id('inputEnter').addEventListener("click", function () { if (focus_id_num != -1) checkandmovefocus(event) }, false);
@@ -128,7 +130,7 @@
                     if (!audioTable[i].paused)
                         audioTable[i].pause();
             }
-
+            focus_id_num = -1;
             max_right = TABLE_SIZE;
         }
     });
@@ -153,7 +155,7 @@
 
     function typeInput(eventInfo) {
         if (focus_id_num != -1) {
-            id(focus_id_num).value += this.id.replace("input", "");
+            id(focus_id_num).value += eventInfo.currentTarget.id.replace("input", "");
         }
     }
 
@@ -174,7 +176,8 @@
     var focus_id_num = -1;
     function setFocus(eventInfo) {
         eventInfo.preventDefault();
-        
+        eventInfo.currentTarget.hideFocus = 'true';
+        id("inputEnter").focus();
         if (focus_id_num != -1 && focus_id_num != eventInfo.currentTarget.id) {
             checkResult(id(focus_id_num));
         }
